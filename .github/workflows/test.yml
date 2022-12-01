@@ -8,7 +8,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - exit 1
+      - name: Fail it
+        run: exit 1
 
   slackNotification:
     name: Production Deployment
@@ -25,4 +26,5 @@ jobs:
     name: after
     runs-on: ubuntu-latest
     steps:
-      - echo "After"
+      - name: Echo
+        run: echo "After"
