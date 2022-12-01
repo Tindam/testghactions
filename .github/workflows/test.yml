@@ -2,37 +2,30 @@ name: Test deployment
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: string
+        description: Environment to deploy to
+        required: true
+      image:
+        type: string
+        description: Image URI
+        required: true
+      SLACK_WEBHOOK:
+        type: string
+        description: Slack webhook
+        required: true
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Fail it
-        run: exit 1
-      - name: Job failed
-        if: ${{ failure() }}
-        run: echo "Running failed"
-      - name: Job Success
-        if: ${{ success() }}
-        run: echo "Running success"
-
-  slackNotification:
-    name: Production Deployment
-    runs-on: ubuntu-latest
-    steps:
-      - name: success it
-        run: exit 0
-      - name: Job failed
-        if: ${{ failure() }}
-        run: echo "Running failed"
-      - name: Job Success
-        if: ${{ success() }}
-        run: echo "Running success"
-
-  after:
-    name: after
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo
-        run: echo "After"
+      - name: Successful deploy notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
+          SLACK_USERNAME: AWS Deployment Bot
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: Panacea deployment run
+          SLACK_MESSAGE: Revision ${{ inputs.image-uri }} deployed to ${{ inputs.environment }}.
