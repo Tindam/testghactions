@@ -10,11 +10,19 @@ jobs:
     steps:
       - name: Fail it
         run: exit 1
+      - name: Job failed
+        if: ${{ failure() }}
+        run: echo "Running failed"
+      - name: Job Success
+        if: ${{ success() }}
+        run: echo "Running success"
 
   slackNotification:
     name: Production Deployment
     runs-on: ubuntu-latest
     steps:
+      - name: success it
+        run: exit 0
       - name: Job failed
         if: ${{ failure() }}
         run: echo "Running failed"
