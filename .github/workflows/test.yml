@@ -1,0 +1,26 @@
+name: Test deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    steps:
+      - exit 1
+
+  slackNotification:
+    name: Production Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job failed
+        if: ${{ failure() }}
+        run: echo "Running failed"
+      - name: Job Success
+        if: ${{ success() }}
+        run: echo "Running success"
+
+  after:
+    name: after
+    steps:
+      - echo "After"
