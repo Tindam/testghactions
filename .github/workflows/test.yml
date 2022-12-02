@@ -9,15 +9,15 @@ on:
         required: true
       DEV_SLACK_WEBHOOK:
         type: string
-        description: Slack webhook
+        description: dev Slack webhook
         required: true
       STAGING_SLACK_WEBHOOK:
         type: string
-        description: Slack webhook
+        description: stag Slack webhook
         required: true
       PROD_SLACK_WEBHOOK:
         type: string
-        description: Slack webhook
+        description: prod Slack webhook
         required: true
 jobs:
   determine-webhook:
@@ -42,13 +42,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Intentional fail
-        run: exit 1
       - name: echo
         run: echo ${{ env.SLACK_WEBHOOK }}
+      - name: Intentional fail
+        run: exit 1
       - name: Successful deploy notification
         uses: ./.github/workflows/actions/deploy-notification
         if: always()
         with:
-          SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
           environment: ${{ inputs.environment }}
