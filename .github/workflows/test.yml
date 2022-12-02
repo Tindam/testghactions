@@ -24,11 +24,8 @@ jobs:
       - name: Intentional fail
         run: exit 1
       - name: Successful deploy notification
-        uses: rtCamp/action-slack-notify@v2
+        uses: ./.github/workflows/actions/notify
         if: always()
-        env:
+        with:
           SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
-          SLACK_USERNAME: AWS Deployment Bot
           SLACK_COLOR: ${{ job.status }}
-          SLACK_TITLE: Panacea deployment run
-          SLACK_MESSAGE: Revision ${{ inputs.image-uri }} deployed to ${{ inputs.environment }}.

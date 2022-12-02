@@ -1,0 +1,23 @@
+inputs:
+
+runs:
+  using: "composite"
+  steps:
+    - name: Successful deploy notification
+      uses: rtCamp/action-slack-notify@v2
+      if: ${{ failure() }}
+      env:
+        SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
+        SLACK_USERNAME: AWS Deployment Bot
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_TITLE: Panacea deployment run
+        SLACK_MESSAGE: Deployment to ${{ inputs.environment }} failed.
+    - name: Successful deploy notification
+      uses: rtCamp/action-slack-notify@v2
+      if: ${{ success() }}
+      env:
+        SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
+        SLACK_USERNAME: AWS Deployment Bot
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_TITLE: Panacea deployment run
+        SLACK_MESSAGE: Deployment to ${{ inputs.environment }} successful.
