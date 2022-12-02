@@ -1,5 +1,5 @@
 inputs:
-  environment:
+  ENVIRONMENT:
     type: string
     description: Environment to deploy to
     required: true
@@ -12,29 +12,29 @@ runs:
   using: "composite"
   steps:
     - name: Alert Failed
-      uses: rtCamp/action-slack-notify@v2
+      uses: rtCamp/action-slack-deploy-notification@v2
       if: job.status == 'failure'
       env:
         SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
         SLACK_USERNAME: AWS Deployment Bot
         SLACK_COLOR: ${{ job.status }}
         SLACK_TITLE: Panacea deployment run
-        SLACK_MESSAGE: Deployment to ${{ inputs.environment }} failed.
+        SLACK_MESSAGE: Deployment to ${{ inputs.ENVIRONMENT }} failed.
     - name: Alert Cancelled
-      uses: rtCamp/action-slack-notify@v2
+      uses: rtCamp/action-slack-deploy-notification@v2
       if: job.status == 'cancelled'
       env:
         SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
         SLACK_USERNAME: AWS Deployment Bot
         SLACK_COLOR: ${{ job.status }}
         SLACK_TITLE: Panacea deployment run
-        SLACK_MESSAGE: Deployment to ${{ inputs.environment }} cancelled.
+        SLACK_MESSAGE: Deployment to ${{ inputs.ENVIRONMENT }} cancelled.
     - name: Alert Success
-      uses: rtCamp/action-slack-notify@v2
+      uses: rtCamp/action-slack-deploy-notification@v2
       if: job.status == 'success'
       env:
         SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
         SLACK_USERNAME: AWS Deployment Bot
         SLACK_COLOR: ${{ job.status }}
         SLACK_TITLE: Panacea deployment run
-        SLACK_MESSAGE: Deployment to ${{ inputs.environment }} successful.
+        SLACK_MESSAGE: Deployment to ${{ inputs.ENVIRONMENT }} successful.
