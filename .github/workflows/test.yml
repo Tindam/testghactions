@@ -25,6 +25,7 @@ jobs:
         run: exit 1
       - name: Successful deploy notification
         uses: rtCamp/action-slack-notify@v2
+        if: always()
         env:
           SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
           SLACK_USERNAME: AWS Deployment Bot
