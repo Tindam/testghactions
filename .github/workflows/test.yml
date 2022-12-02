@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Intentional fail
-        runs: exit 1
+        run: exit 1
       - name: Successful deploy notification
         uses: rtCamp/action-slack-notify@v2
         env:
