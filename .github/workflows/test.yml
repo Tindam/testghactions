@@ -7,10 +7,6 @@ on:
         type: string
         description: Environment to deploy to
         required: true
-      image:
-        type: string
-        description: Image URI
-        required: true
       SLACK_WEBHOOK:
         type: string
         description: Slack webhook
@@ -29,4 +25,4 @@ jobs:
         if: always()
         with:
           SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
-          SLACK_COLOR: ${{ job.status }}
+          environment: ${{ inputs.environment }}

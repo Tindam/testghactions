@@ -1,4 +1,12 @@
 inputs:
+  environment:
+    type: string
+    description: Environment to deploy to
+    required: true
+  SLACK_WEBHOOK:
+    type: string
+    description: Slack webhook
+    required: true
 
 runs:
   using: "composite"
