@@ -38,6 +38,7 @@ jobs:
           echo "SLACK_WEBHOOK=${{inputs.PROD_SLACK_WEBHOOK}}" >> $GITHUB_ENV
   deploy:
     name: Deploy
+    needs: determine-webhook
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
